@@ -30,7 +30,20 @@
         console.log('wsError');
     }
     function wsMessage(e) {
-        console.log('wsMessage', e);
+        const msgData = JSON.parse( e.data)
+        oList.appendChild(creatMsg(msgData))
+        console.log('wsMessage', msgData);
+    }
+    function creatMsg(data){
+        const {user,dateTime,message} = data
+        const oItem = doc.createElement('li')
+        oItem.innerHTML= `<p>
+          <span>${user}</span>
+          <i>${new Date(dateTime)}</i>
+        </p>
+        <p>${message}</p>
+        `
+        return oItem
     }
     function handleSendClick() {
         const msg = oMessage.value
@@ -43,6 +56,7 @@
             dateTime: new Date().getTime(),
             message: msg
         }))
+        oMessage.value =''
         console.log('发送了消息',msg);
     }
     init();

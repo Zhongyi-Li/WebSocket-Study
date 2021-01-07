@@ -25,6 +25,9 @@ const ws = require('ws')
         ws.on('message',handleMessage)
     }
     function handleMessage(msg){
+        server.clients.forEach((c)=>{
+            c.send(msg)
+        })
         console.log('Resolve msg',msg);
     }
     init()
